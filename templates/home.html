@@ -1,0 +1,410 @@
+<!-- <!DOCTYPE html>
+<html >
+<head>
+  <meta charset="UTF-8">
+  <title>Cardio Moniter</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&display=swap" rel="stylesheet">  
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<style>
+
+body { 
+	width: 100%;
+	height:auto;
+	font-family: 'Open Sans', sans-serif;
+	color: #fff;
+	font-size: 18px;
+	text-align:center;
+	letter-spacing:1.2px;
+    background-image: url("../static/about.jpg");
+    background-size: cover;	
+}
+#form-div{
+        border-width: 0.2rem !important;
+        border-radius: 2% !important;
+        box-shadow: rgb(187, 183, 183) 3px 7px !important; 
+        /* background-image: url("../static/heart.jpeg");
+        background-size: cover;	 */
+        background:rgba(100, 148, 237, 0.685);
+
+    }
+#form-div:hover{
+    box-shadow: rgb(104, 104, 104) 5px 10px !important;
+}
+input,select{
+        outline: none !important;
+        border: none !important;
+        border-bottom:green 2px solid !important;
+    }
+input:focus,input:active{
+        outline: none !important;
+        border: none !important;
+    }
+input::placeholder,select::placeholder{ 
+  color: black !important;
+  opacity: 1;
+}
+h1{
+    color: orange !important;
+    }
+footer{
+    background: teal !important;
+    color: rgb(253, 253, 253) !important;
+    font-weight: bold !important;
+    text-align: center !important;
+    }
+nav{
+    background: teal !important;
+    box-shadow: rgba(164, 164, 165, 0.582) 2px 8px;
+    color: white;
+    }
+p{
+    border-bottom: 2px solid orangered;
+    }
+.navbar-brand{
+        font-family: 'Berkshire Swash', cursive;
+    }
+.form-group{
+        border: none !important;
+        outline: none !important;
+    }
+.form-control:focus,select:focus,select:active{
+        box-shadow: gray 1px 3px !important;
+    }
+select option { color: black; }
+select option:first-child{
+  color: black;
+}
+#mobileview{
+    display: none;
+}
+#counter{
+    position: absolute;
+    right: 2%;
+    top: 11%;
+    z-index: 9999;
+    height: 50px;
+    min-width: 50px;
+    background-color: rgba(0, 128, 128, 0.397);
+    color: orange;
+    text-align: center;
+    line-height: 50px;
+    font-weight: bold;
+    font-size: large;
+
+}
+
+@media (max-width:767px) {
+    #mobileview{
+    display: block !important;
+}
+}
+    
+</style>
+ 
+</head>
+<body>
+    <nav class=" text-center navbar navbar-expand-md mb-3">
+        <a class="navbar-brand text-white" href="{{ url_for('home') }}"><span class="r-name font-weight-bold"> <img src="static/heartlogo.png" height="40px" width="40px"/>Cardio Monitor</span></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav ml-auto">
+            <a class="nav-item nav-link text-white font-weight-bold" href="{{ url_for('about') }}">About heart disease</a>
+          </div>
+        </div>
+      </nav>
+    <div class="container align-items-center mt-1">
+        <h4 class="text-dark my-2 p-2" id="mobileview">Click to know ☞<a class="text-info " href="{{ url_for('about') }}" >About heart disease</a></h4>
+        <div class="rounded border" id="counter">{{all_count}}</div>
+        <div class="row">
+            <div class=" col-md-10 offset-md-1 col-xs-12 border p-4 mt-1" id="form-div">
+                <div class="pb-1 pt-1 mb-2 text-center">
+                    <h1 class="pb-1 mb-1 h3 font-weight-bold"> CARDIO MONITOR</h1>
+                    <p class="text-white pb-1">This web app helps you to find out whether you are at a risk of developing a heart disease. <br>
+                        Please fill below details to know your Heart Condition.</p>
+                </div>
+                <form action="{{ url_for('predict')}}"method="post">
+                    <div class="form-row">
+                        <div class="form-group col-md-6"><input class="form-control" type="text" name="name" placeholder="Your Name"></div>
+                    <div class="form-group col-md-6"><input class="form-control" type="number" name="age" placeholder="Your Age eg. 34"></div>
+                    <div class="form-group col-md-6"><input class="form-control" type="number" name="trestbps" placeholder="Resting blood pressure (trsestbps) eg-130mm/hg"></div>
+                    <div class="form-group col-md-6"><input class="form-control" type="number" name="chol" placeholder="Serum cholestoral in mg/dl (chol) eg-250"></div>
+                    <div class="form-group col-md-6"><input class="form-control" type="number" name="thalach" placeholder="Maximum heart rate achieved (thalach) eg-187"></div>
+                    <div class="form-group col-md-6"><input class="form-control" type="number" name="oldpeak" placeholder="ST depression value (oldpeak) eg-4"></div>
+                    <div class="form-group col-md-6"><input class="form-control" type="number" name="ca" placeholder="Number of major vessels (0-3) colored by flourosopy (ca) eg-0"></div>
+                    <div class="form-group col-md-6">
+                        <select class="custom-select" id="cuisine" name="sex" placeholder="sex">
+                            <option value="none">Select a Gender</option>                
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <select class="custom-select" name="cp" placeholder="cp">
+                            <option value="none">Select Chest pain Type</option>                
+                            <option value="Typical angina">Typical angina</option>
+                            <option value="Atypical angina">Atypical angina</option>
+                            <option value="Non-anginal pain">Non-anginal pain</option>
+                            <option value="Asymptomatic">Asymptomatic</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <select class="custom-select"  name="exang" placeholder="exang">
+                            <option value="none">Select exercise induced angina</option>                
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <select class="custom-select" name="fbs" placeholder="fbs">
+                            <option value="none">Select fasting blood sugar > 120 mg/dl</option>                
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <select class="custom-select" name="slope" placeholder="slope">
+                            <option value="none">Select slope of the peak exercise</option>                
+                            <option value="Upsloping: better heart rate with excercise(uncommon)">Upsloping: better heart rate with excercise(uncommon)</option>
+                            <option value="Flatsloping: minimal change(typical healthy heart)">Flatsloping: minimal change(typical healthy heart)</option>
+                            <option value="Downsloping: signs of unhealthy heart">Downsloping: signs of unhealthy heart</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <select class="custom-select" name="thal" placeholder="thal">
+                            <option value="none">Select heart rate condition(thal)</option>                
+                            <option value="fixed defect: used to be defect but ok now">fixed defect: used to be defect but ok now</option>
+                            <option value="reversable defect: no proper blood movement when excercising">Freversable defect: no proper blood movement when excercising</option>
+                            <option value="normal">normal</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <select class="custom-select"  name="restecg" placeholder="resecg">
+                            <option value="none">Select resting electrocardiographic results</option>                
+                            <option value="Nothing to note">Nothing to note</option>
+                            <option value="ST-T Wave abnormality">ST-T Wave abnormality</option>
+                            <option value="Possible or definite left ventricular hypertrophy">Possible or definite left ventricular hypertrophy</option>
+                        </select>
+                    </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block btn-large pt-3">Predict</button>   
+                </form>
+                <div class="my-1 p-1 text-warning border-top ">Note : By clicking prediction, you agree that your information will be stored to enhance model.</div>
+            </div>
+        </div>
+        <footer class="mt-4 p-3 border-info">Made while having ☕️. By Sankalp Tyagi
+            <a href="www.linkedin.com/in/sankalp-tyagi-596039249" class="text-primary h2">  <i class="fa fa-linkedin-square" aria-hidden="true">  </i></a> 
+            <a href="https://github.com/Sankalp0-1" class="text-dark h2">  <i class="fa fa-github" aria-hidden="true">  </i></a>
+        </footer>
+    </div>	
+</body>
+</html>
+
+
+
+
+    
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Cardio Monitor</title>
+    <style>
+        :root{--teal:#0d6e6e;--teal-light:#14a5a5;--teal-dark:#084f4f;--cream:#f8f4ef;--cream-dark:#ede8e1;--red:#c0392b;--text-dark:#1a1a1a;--text-mid:#4a4a4a;--text-light:#8a8a8a}
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text-dark);overflow-x:hidden}
+        nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:16px 48px;background:rgba(8,79,79,0.97);backdrop-filter:blur(12px);box-shadow:0 2px 20px rgba(0,0,0,0.2)}
+        .nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+        .nav-brand .hicon{font-size:1.5rem;animation:hb 1.8s ease infinite}
+        @keyframes hb{0%,100%{transform:scale(1)}14%{transform:scale(1.2)}28%{transform:scale(1)}42%{transform:scale(1.1)}}
+        .nav-brand span{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:600;color:#fff}
+        .nav-links{display:flex;gap:28px;align-items:center}
+        .nav-links a{color:rgba(255,255,255,0.8);text-decoration:none;font-size:0.85rem;letter-spacing:0.06em;text-transform:uppercase;transition:color 0.2s}
+        .nav-links a:hover{color:#fff}
+        .nav-cta{background:rgba(255,255,255,0.15)!important;border:1px solid rgba(255,255,255,0.35)!important;padding:7px 18px!important;border-radius:40px!important}
+        .nav-counter{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);color:#fff;padding:4px 14px;border-radius:20px;font-size:0.8rem;display:flex;align-items:center;gap:6px}
+        .cdot{width:6px;height:6px;border-radius:50%;background:#4ade80;animation:pulse 2s ease infinite}
+        @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(0.7)}}
+        .hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;padding-top:70px}
+        .hero-left{display:flex;flex-direction:column;justify-content:center;padding:80px 56px 80px 72px;position:relative}
+        .hero-left::after{content:'';position:absolute;top:0;bottom:0;right:0;width:1px;background:linear-gradient(to bottom,transparent,var(--teal-light),transparent)}
+        .hero-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(13,110,110,0.1);border:1px solid rgba(13,110,110,0.25);color:var(--teal);font-size:0.72rem;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;padding:6px 14px;border-radius:40px;margin-bottom:28px;width:fit-content}
+        .hero-tag::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--teal-light);animation:pulse 2s ease infinite}
+        .hero-title{font-family:'Cormorant Garamond',serif;font-size:4rem;font-weight:300;line-height:1.1;margin-bottom:22px}
+        .hero-title em{font-style:italic;color:var(--teal)}
+        .hero-title .acc{color:var(--red)}
+        .hero-desc{font-size:0.97rem;color:var(--text-mid);line-height:1.75;max-width:420px;margin-bottom:36px}
+        .hero-actions{display:flex;gap:16px;align-items:center}
+        .btn-p{background:var(--teal);color:#fff;padding:13px 32px;border-radius:50px;text-decoration:none;font-size:0.9rem;font-weight:500;letter-spacing:0.04em;transition:all 0.3s;box-shadow:0 4px 20px rgba(13,110,110,0.3);display:inline-flex;align-items:center;gap:9px}
+        .btn-p:hover{background:var(--teal-dark);transform:translateY(-2px);box-shadow:0 8px 28px rgba(13,110,110,0.4)}
+        .btn-s{color:var(--teal);text-decoration:none;font-size:0.88rem;font-weight:500;display:inline-flex;align-items:center;gap:8px;transition:gap 0.2s}
+        .btn-s:hover{gap:14px}
+        .hero-stats{display:flex;gap:36px;margin-top:48px;padding-top:36px;border-top:1px solid var(--cream-dark)}
+        .stat-num{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:600;color:var(--teal);line-height:1}
+        .stat-label{font-size:0.74rem;color:var(--text-light);margin-top:4px;letter-spacing:0.06em;text-transform:uppercase}
+        .hero-right{position:relative;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#e8f5f5 0%,#f0fafa 50%,#fef9f9 100%);overflow:hidden}
+        .hero-right::before{content:'';position:absolute;top:-80px;right:-80px;width:450px;height:450px;border-radius:50%;background:radial-gradient(circle,rgba(13,110,110,0.07) 0%,transparent 70%)}
+        .big-heart{font-size:9rem;animation:hb 1.8s ease infinite;filter:drop-shadow(0 20px 40px rgba(192,57,43,0.2));position:relative;z-index:2}
+        .fcard{position:absolute;background:#fff;border-radius:14px;padding:12px 18px;box-shadow:0 8px 28px rgba(0,0,0,0.08);display:flex;align-items:center;gap:11px;font-size:0.8rem;font-weight:500;color:var(--text-mid);border:1px solid rgba(0,0,0,0.05);animation:float 6s ease-in-out infinite;z-index:3}
+        .fcard:nth-child(1){top:16%;left:6%;animation-delay:0s}.fcard:nth-child(2){top:22%;right:5%;animation-delay:1.5s}.fcard:nth-child(3){bottom:26%;left:5%;animation-delay:0.8s}.fcard:nth-child(4){bottom:20%;right:6%;animation-delay:2s}
+        @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+        .fcard-icon{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:1rem}
+        .fcard-icon.g{background:rgba(13,110,110,0.1)}.fcard-icon.r{background:rgba(192,57,43,0.1)}.fcard-icon.o{background:rgba(201,168,76,0.1)}.fcard-icon.b{background:rgba(52,152,219,0.1)}
+        .fcard-sub{font-size:0.68rem;color:var(--text-light);margin-bottom:2px}
+        .form-section{padding:80px 72px;background:#fff}
+        .section-header{text-align:center;margin-bottom:48px}
+        .section-tag{display:inline-block;font-size:0.7rem;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:var(--teal);margin-bottom:12px}
+        .section-title{font-family:'Cormorant Garamond',serif;font-size:2.6rem;font-weight:300;line-height:1.2}
+        .section-title em{color:var(--teal);font-style:italic}
+        .section-sub{color:var(--text-light);margin-top:10px;font-size:0.92rem}
+        .form-card{background:var(--cream);border-radius:22px;padding:44px 52px;max-width:920px;margin:0 auto;border:1px solid var(--cream-dark)}
+        .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:22px}
+        .form-group{display:flex;flex-direction:column;gap:7px}
+        .form-group label{font-size:0.72rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-light)}
+        .form-group input,.form-group select{padding:13px 16px;border:1.5px solid var(--cream-dark);border-radius:11px;background:#fff;font-family:'DM Sans',sans-serif;font-size:0.93rem;color:var(--text-dark);transition:border-color 0.2s,box-shadow 0.2s;outline:none;-webkit-appearance:none;appearance:none}
+        .form-group select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238a8a8a' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;background-color:#fff;padding-right:38px}
+        .form-group input:focus,.form-group select:focus{border-color:var(--teal-light);box-shadow:0 0 0 3px rgba(13,110,110,0.1)}
+        .form-group input::placeholder{color:#bbb}
+        .btn-predict{width:100%;padding:17px;background:var(--teal);color:#fff;border:none;border-radius:13px;font-family:'DM Sans',sans-serif;font-size:1rem;font-weight:500;letter-spacing:0.05em;cursor:pointer;transition:all 0.3s;box-shadow:0 4px 20px rgba(13,110,110,0.25);display:flex;align-items:center;justify-content:center;gap:10px}
+        .btn-predict:hover{background:var(--teal-dark);transform:translateY(-2px);box-shadow:0 8px 28px rgba(13,110,110,0.35)}
+        .form-note{text-align:center;margin-top:14px;font-size:0.78rem;color:var(--text-light);display:flex;align-items:center;justify-content:center;gap:6px}
+        .how-section{padding:80px 72px;background:var(--cream)}
+        .steps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;max-width:860px;margin:48px auto 0}
+        .step-card{background:#fff;border-radius:18px;padding:32px 26px;text-align:center;border:1px solid var(--cream-dark);transition:transform 0.25s,box-shadow 0.25s}
+        .step-card:hover{transform:translateY(-6px);box-shadow:0 16px 40px rgba(0,0,0,0.08)}
+        .step-num{width:44px;height:44px;border-radius:50%;background:rgba(13,110,110,0.08);color:var(--teal);font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:600;display:flex;align-items:center;justify-content:center;margin:0 auto 16px}
+        .step-icon{font-size:1.9rem;margin-bottom:13px}
+        .step-title{font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-weight:600;margin-bottom:9px}
+        .step-desc{font-size:0.85rem;color:var(--text-light);line-height:1.65}
+        footer{background:var(--teal-dark);padding:44px 72px;display:flex;align-items:center;justify-content:space-between}
+        .footer-brand{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:600;color:#fff;display:flex;align-items:center;gap:9px;margin-bottom:6px}
+        .footer-tagline{font-size:0.8rem;color:rgba(255,255,255,0.45)}
+        .footer-center{font-size:0.85rem;color:rgba(255,255,255,0.6);text-align:center}
+        .footer-center strong{color:rgba(255,255,255,0.9)}
+        .footer-right{display:flex;gap:12px}
+        .social-btn{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.75);text-decoration:none;font-size:0.95rem;transition:all 0.25s}
+        .social-btn:hover{background:rgba(255,255,255,0.2);color:#fff;transform:translateY(-3px)}
+        .reveal{opacity:0;transform:translateY(24px);transition:opacity 0.6s ease,transform 0.6s ease}
+        .reveal.visible{opacity:1;transform:translateY(0)}
+        @media(max-width:768px){.hero{grid-template-columns:1fr}.hero-right{display:none}.hero-left{padding:60px 28px}.hero-title{font-size:2.8rem}.form-section,.how-section{padding:60px 24px}.form-card{padding:28px 20px}.form-grid{grid-template-columns:1fr}.steps-grid{grid-template-columns:1fr}nav{padding:14px 20px}.nav-counter{display:none}footer{flex-direction:column;gap:20px;text-align:center;padding:36px 24px}}
+    </style>
+</head>
+<body>
+
+<nav>
+    <a class="nav-brand" href="{{ url_for('home') }}">
+        <span class="hicon">🫀</span>
+        <span>Cardio Monitor</span>
+    </a>
+    <div class="nav-links">
+        <a href="{{ url_for('about') }}">About Disease</a>
+        <a href="#check" class="nav-cta">Check Now</a>
+        <div class="nav-counter"><span class="cdot"></span><span>{{ all_count }} checked</span></div>
+    </div>
+</nav>
+
+<section class="hero">
+    <div class="hero-left">
+        <div class="hero-tag">AI-Powered Heart Health</div>
+        <h1 class="hero-title">Know your<br><em>heart's</em> risk<br><span class="acc">before</span> it's late</h1>
+        <p class="hero-desc">Cardio Monitor uses machine learning trained on real clinical data to assess your cardiovascular risk in seconds — with 92% accuracy.</p>
+        <div class="hero-actions">
+            <a href="#check" class="btn-p"><i class="fa fa-heartbeat"></i> Check My Heart</a>
+            <a href="{{ url_for('about')
+ }}" class="btn-s">Learn more <i class="fa fa-arrow-right"></i></a>
+        </div>
+        <div class="hero-stats">
+            <div><div class="stat-num">92%</div><div class="stat-label">Accuracy</div></div>
+            <div><div class="stat-num">303</div><div class="stat-label">Clinical Records</div></div>
+            <div><div class="stat-num">13</div><div class="stat-label">Parameters</div></div>
+        </div>
+    </div>
+    <div class="hero-right">
+        <div class="fcard"><div class="fcard-icon g">💚</div><div><div class="fcard-sub">Risk Level</div>Very Low</div></div>
+        <div class="fcard"><div class="fcard-icon r">❤️</div><div><div class="fcard-sub">Heart Rate</div>Normal</div></div>
+        <div class="fcard"><div class="fcard-icon o">📊</div><div><div class="fcard-sub">Cholesterol</div>Controlled</div></div>
+        <div class="fcard"><div class="fcard-icon b">🧠</div><div><div class="fcard-sub">ML Model</div>KNN Classifier</div></div>
+        <div class="big-heart">🫀</div>
+    </div>
+</section>
+
+<section class="form-section" id="check">
+    <div class="section-header reveal">
+        <div class="section-tag">Health Assessment</div>
+        <h2 class="section-title">Fill in your <em>details</em></h2>
+        <p class="section-sub">All fields are required for an accurate prediction</p>
+    </div>
+    <div class="form-card reveal">
+        <form action="{{ url_for('predict') }}" method="post">
+            <div class="form-grid">
+                <div class="form-group"><label>Your Name</label><input type="text" name="name" placeholder="e.g. Sankalp" required></div>
+                <div class="form-group"><label>Age</label><input type="number" name="age" placeholder="e.g. 34" required></div>
+                <div class="form-group"><label>Resting Blood Pressure (mm Hg)</label><input type="number" name="trestbps" placeholder="e.g. 130" required></div>
+                <div class="form-group"><label>Serum Cholesterol (mg/dl)</label><input type="number" name="chol" placeholder="e.g. 250" required></div>
+                <div class="form-group"><label>Max Heart Rate Achieved</label><input type="number" name="thalach" placeholder="e.g. 187" required></div>
+                <div class="form-group"><label>ST Depression (oldpeak)</label><input type="number" step="0.1" name="oldpeak" placeholder="e.g. 4" required></div>
+                <div class="form-group"><label>Major Vessels (0-3)</label><input type="number" name="ca" min="0" max="3" placeholder="e.g. 0" required></div>
+                <div class="form-group"><label>Gender</label>
+                    <select name="sex" required><option value="none" disabled selected>Select Gender</option><option value="male">Male</option><option value="female">Female</option></select>
+                </div>
+                <div class="form-group"><label>Chest Pain Type</label>
+                    <select name="cp" required><option value="none" disabled selected>Select Type</option><option value="Typical angina">Typical Angina</option><option value="Atypical angina">Atypical Angina</option><option value="Non-anginal pain">Non-anginal Pain</option><option value="Asymptomatic">Asymptomatic</option></select>
+                </div>
+                <div class="form-group"><label>Exercise Induced Angina</label>
+                    <select name="exang" required><option value="none" disabled selected>Select Option</option><option value="Yes">Yes</option><option value="No">No</option></select>
+                </div>
+                <div class="form-group"><label>Fasting Blood Sugar &gt; 120 mg/dl</label>
+                    <select name="fbs" required><option value="none" disabled selected>Select Option</option><option value="Yes">Yes</option><option value="No">No</option></select>
+                </div>
+                <div class="form-group"><label>Slope of Peak Exercise</label>
+                    <select name="slope" required><option value="none" disabled selected>Select Slope</option><option value="Upsloping: better heart rate with excercise(uncommon)">Upsloping (uncommon)</option><option value="Flatsloping: minimal change(typical healthy heart)">Flatsloping (healthy)</option><option value="Downsloping: signs of unhealthy heart">Downsloping (unhealthy)</option></select>
+                </div>
+                <div class="form-group"><label>Thalassemia Condition</label>
+                    <select name="thal" required><option value="none" disabled selected>Select Condition</option><option value="fixed defect: used to be defect but ok now">Fixed Defect (resolved)</option><option value="reversable defect: no proper blood movement when excercising">Reversible Defect</option><option value="normal">Normal</option></select>
+                </div>
+                <div class="form-group"><label>Resting ECG</label>
+                    <select name="restecg" required><option value="none" disabled selected>Select ECG Result</option><option value="Nothing to note">Nothing to Note</option><option value="ST-T Wave abnormality">ST-T Wave Abnormality</option><option value="Possible or definite left ventricular hypertrophy">Left Ventricular Hypertrophy</option></select>
+                </div>
+            </div>
+            <button type="submit" class="btn-predict"><i class="fa fa-heartbeat"></i> Predict My Heart Risk</button>
+            <p class="form-note"><i class="fa fa-shield-alt" style="color:var(--teal)"></i> By submitting, you agree your data may be used to improve the model.</p>
+        </form>
+    </div>
+</section>
+
+<section class="how-section">
+    <div class="section-header reveal"><div class="section-tag">The Process</div><h2 class="section-title">How it <em>works</em></h2></div>
+    <div class="steps-grid">
+        <div class="step-card reveal"><div class="step-num">1</div><div class="step-icon">📋</div><div class="step-title">Fill Details</div><p class="step-desc">Enter your clinical parameters including BP, cholesterol, and more.</p></div>
+        <div class="step-card reveal" style="transition-delay:0.15s"><div class="step-num">2</div><div class="step-icon">🧠</div><div class="step-title">AI Analysis</div><p class="step-desc">Our KNN model trained on 303 clinical records analyses your data instantly.</p></div>
+        <div class="step-card reveal" style="transition-delay:0.3s"><div class="step-num">3</div><div class="step-icon">📊</div><div class="step-title">Get Results</div><p class="step-desc">Receive your risk assessment with visual statistics and health advice.</p></div>
+    </div>
+</section>
+
+<footer>
+    <div><div class="footer-brand">🫀 Cardio Monitor</div><div class="footer-tagline">AI-powered heart disease prediction</div></div>
+    <div class="footer-center">Made with ❤️ &nbsp;·&nbsp; By <strong>Team Cardio</strong></div>
+    <div class="footer-right">
+        <a href="https://www.linkedin.com/in/sankalp-tyagi-596039249" class="social-btn" target="_blank"><i class="fa-brands fa-linkedin-in"></i></a>
+        <a href="https://github.com/Sankalp0-1" class="social-btn" target="_blank"><i class="fa-brands fa-github"></i></a>
+    </div>
+</footer>
+<script>
+    const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')}),{threshold:0.1});
+    document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));
+    document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();document.querySelector(a.getAttribute('href'))?.scrollIntoView({behavior:'smooth'})}));
+</script>
+</body>
+</html>

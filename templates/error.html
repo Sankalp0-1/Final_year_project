@@ -1,0 +1,159 @@
+<!-- <!DOCTYPE html>
+<html >
+From https://codepen.io/frytyler/pen/EGdtg
+<head>
+  <meta charset="UTF-8">
+  <title>Cardio Moniter</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&display=swap" rel="stylesheet"> 
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<style>
+
+body { 
+	width: 100%;
+	height:auto;
+	font-family: 'Open Sans', sans-serif;
+	color: #fff;
+	font-size: 18px;
+	text-align:center;
+	letter-spacing:1.2px;
+}
+#form-div{
+        background: rgba(0, 0, 0, 0.54);
+        border-width: 0.2rem !important;
+        border-radius: 2% !important;   
+    }
+input,select{
+        outline: none !important;
+        background: rgba(75, 74, 74, 0.555) !important;
+        border-radius: solid 2px orange !important;
+        color: white !important;
+    }
+    h1{
+        color: orange !important;
+    }
+    footer{
+        background: rgba(4, 0, 255, 0.534) !important;
+        color: rgb(253, 253, 253) !important;
+        font-weight: bold !important;
+        text-align: center !important;
+    }
+    nav{
+        background: rgba(0, 0, 0, 0.596) !important;
+        box-shadow: rgb(241, 239, 239) 2px 8px;
+    }
+    p{
+        border-bottom: 2px solid orangered;
+    }
+    .navbar-brand{
+        font-family: 'Berkshire Swash', cursive;
+    }
+</style>
+ 
+</head>
+<body>
+    <nav class=" text-center navbar navbar-expand-md mb-2">
+        <a class="navbar-brand" href="{{ url_for('home') }}"><span class="r-name font-weight-bold"> <img src="static/heartlogo.png" height="40px" width="40px"/>Cardio Moniter</span></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </nav>
+    <h4 class="text-info mt-1 mb-1 p-3">hi there, We think that you have not filled all the details please fill all the required details. If you have filled then its </h4>
+    <img src="static/500.webp" alt=" " class="mt-1">
+</body>
+</html>
+
+
+
+
+    
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Cardio Monitor — Error</title>
+    <style>
+        :root{--teal:#0d6e6e;--teal-light:#14a5a5;--teal-dark:#084f4f;--cream:#f8f4ef;--cream-dark:#ede8e1;--red:#c0392b;--text-dark:#1a1a1a;--text-mid:#4a4a4a;--text-light:#8a8a8a}
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text-dark);min-height:100vh;display:flex;flex-direction:column}
+        nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:16px 48px;background:rgba(8,79,79,0.97);backdrop-filter:blur(12px);box-shadow:0 2px 20px rgba(0,0,0,0.2)}
+        .nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+        .nav-brand .hicon{font-size:1.5rem;animation:hb 1.8s ease infinite}
+        @keyframes hb{0%,100%{transform:scale(1)}14%{transform:scale(1.2)}28%{transform:scale(1)}42%{transform:scale(1.1)}}
+        .nav-brand span{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:600;color:#fff}
+        .nav-links a{color:rgba(255,255,255,0.8);text-decoration:none;font-size:0.85rem;letter-spacing:0.06em;text-transform:uppercase}
+        .error-page{flex:1;display:flex;align-items:center;justify-content:center;padding-top:80px;background:linear-gradient(135deg,#fff8f8 0%,var(--cream) 100%)}
+        .error-content{text-align:center;padding:60px 40px;max-width:600px}
+        .error-icon{font-size:5rem;margin-bottom:24px;animation:shake 2s ease infinite}
+        @keyframes shake{0%,100%{transform:rotate(0deg)}10%,30%,50%,70%,90%{transform:rotate(-5deg)}20%,40%,60%,80%{transform:rotate(5deg)}}
+        .error-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(192,57,43,0.08);border:1px solid rgba(192,57,43,0.2);color:var(--red);font-size:0.72rem;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;padding:6px 14px;border-radius:40px;margin-bottom:20px}
+        .error-title{font-family:'Cormorant Garamond',serif;font-size:3rem;font-weight:300;margin-bottom:16px;color:var(--text-dark)}
+        .error-title em{font-style:italic;color:var(--red)}
+        .error-desc{color:var(--text-mid);font-size:0.97rem;line-height:1.75;margin-bottom:36px}
+        .error-actions{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+        .btn-home{background:var(--teal);color:#fff;padding:13px 30px;border-radius:50px;text-decoration:none;font-size:0.9rem;font-weight:500;transition:all 0.3s;box-shadow:0 4px 20px rgba(13,110,110,0.3);display:inline-flex;align-items:center;gap:9px}
+        .btn-home:hover{background:var(--teal-dark);transform:translateY(-2px)}
+        .checklist{background:#fff;border-radius:18px;padding:28px;margin:36px auto 0;text-align:left;border:1px solid var(--cream-dark);max-width:440px}
+        .checklist-title{font-size:0.8rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-light);margin-bottom:16px}
+        .check-item{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--cream-dark);font-size:0.9rem;color:var(--text-mid)}
+        .check-item:last-child{border-bottom:none}
+        .check-item i{color:var(--teal);width:18px}
+        footer{background:var(--teal-dark);padding:36px 72px;display:flex;align-items:center;justify-content:space-between}
+        .footer-brand{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:600;color:#fff;display:flex;align-items:center;gap:9px;margin-bottom:6px}
+        .footer-tagline{font-size:0.8rem;color:rgba(255,255,255,0.45)}
+        .footer-center{font-size:0.85rem;color:rgba(255,255,255,0.6);text-align:center}
+        .footer-center strong{color:rgba(255,255,255,0.9)}
+        .footer-right{display:flex;gap:12px}
+        .social-btn{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.75);text-decoration:none;font-size:0.95rem;transition:all 0.25s}
+        .social-btn:hover{background:rgba(255,255,255,0.2);color:#fff;transform:translateY(-3px)}
+        @media(max-width:768px){nav{padding:14px 20px}footer{flex-direction:column;gap:20px;text-align:center;padding:28px 20px}}
+    </style>
+</head>
+<body>
+<nav>
+    <a class="nav-brand" href="{{ url_for('home') }}">
+        <span class="hicon">🫀</span>
+        <span>Cardio Monitor</span>
+    </a>
+    <div class="nav-links">
+        <a href="{{ url_for('home') }}">Home</a>
+    </div>
+</nav>
+
+<div class="error-page">
+    <div class="error-content">
+        <div class="error-icon">😅</div>
+        <div class="error-tag"><i class="fa fa-triangle-exclamation"></i> Incomplete Form</div>
+        <h1 class="error-title">Oops! Something's <em>missing</em></h1>
+        <p class="error-desc">It looks like you haven't filled in all the required details. Please go back and complete the form to get your heart health prediction.</p>
+        <div class="error-actions">
+            <a href="{{ url_for('home') }}#check" class="btn-home"><i class="fa fa-arrow-left"></i> Fill the Form</a>
+        </div>
+        <div class="checklist">
+            <div class="checklist-title">Make sure you've filled:</div>
+            <div class="check-item"><i class="fa fa-user"></i> Your name and age</div>
+            <div class="check-item"><i class="fa fa-heart-pulse"></i> Blood pressure & cholesterol</div>
+            <div class="check-item"><i class="fa fa-list-check"></i> All dropdown selections</div>
+            <div class="check-item"><i class="fa fa-chart-line"></i> Heart rate & ST depression values</div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div><div class="footer-brand">🫀 Cardio Monitor</div><div class="footer-tagline">AI-powered heart disease prediction</div></div>
+    <div class="footer-center">Made with ❤️ &nbsp;·&nbsp; By <strong>Team Cardio</strong></div>
+    <div class="footer-right">
+        <a href="https://www.linkedin.com/in/sankalp-tyagi-596039249" class="social-btn" target="_blank"><i class="fa-brands fa-linkedin-in"></i></a>
+        <a href="https://github.com/Sankalp0-1" class="social-btn" target="_blank"><i class="fa-brands fa-github"></i></a>
+    </div>
+</footer>
+</body>
+</html>

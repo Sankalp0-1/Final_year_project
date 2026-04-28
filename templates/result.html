@@ -1,0 +1,310 @@
+<!-- <!DOCTYPE html>
+<html >
+From https://codepen.io/frytyler/pen/EGdtg--
+<head>
+  <meta charset="UTF-8">
+  <title>Cardio Moniter</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&display=swap" rel="stylesheet">  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<style>
+
+body { 
+	width: 100%;
+	height:auto;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 18px;
+	text-align:center;
+	letter-spacing:1.2px;
+    background-image: url("../static/about.jpg") !important;
+    background-size: cover !important;
+    background-position: center;	
+}
+footer{
+    background: teal !important;
+    color: rgb(253, 253, 253) !important;
+    font-weight: bold !important;
+    text-align: center !important;
+    }
+    
+    nav{
+        background: teal !important;
+        box-shadow:black 2px 8px;
+    }
+    
+    .navbar-brand{
+        font-family: 'Berkshire Swash', cursive;
+        color: #fff !important;
+    }
+    .card-header{
+        background-color:none !important;
+    }
+    #counter{
+    position: absolute;
+    right: 2%;
+    top: 11%;
+    z-index: 9999;
+    height: 100px;
+    min-width: 50px;
+    background-color: rgba(0, 128, 128, 0.397);
+    color: orange;
+    text-align: center;
+    line-height: 100px;
+    font-weight: bold;
+    font-size: large;
+
+}
+.container{
+    /* background-color: rgba(0, 0, 0, 0.507) !important; */
+    background:rgba(100, 148, 237, 0.377);
+    border-radius: 2% !important;
+    box-shadow: rgb(187, 183, 183) 3px 7px !important;
+}
+    
+</style>
+ 
+</head>
+<body>
+    <nav class=" text-center navbar navbar-expand-md mb-3">
+        <a class="navbar-brand" href="{{ url_for('home') }}"><span class="r-name font-weight-bold"> <img src="static/heartlogo.png" height="40px" width="40px"/>Cardio Monitor</span></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav ml-auto">
+            <a class="nav-item nav-link text-white font-weight-bold" href="{{ url_for('about') }}">About heart disease</a>
+          </div>
+        </div>
+      </nav>
+    <div class="rounded border" id="counter">{{model_counter}} <br /> {{total_counter}}</div>
+    <div class="container align-items-center">
+        <div class="row border rounded">
+            <div class=" col-md-12">
+                <div class="my-1 mb-3 text-center">
+                    <div class="p-2 my-1 text-center"><h2 class="font-weight-bold text-center text-success">Prediction</h2>
+                    <h4 class="my-1 border-bottom p-2 text-white font-weight-bold">Hello {{nameofpatient}}</h4>
+                </div>
+                    <div class="card-body">
+                    {% if prediction==1 %}
+                    <div class="row">
+                        <div class="col-md-6 border-right"><img class="gif" src="https://media.tenor.com/images/eb53c2a525f26f2504c7e7ba27c2470b/tenor.gif" alt="not suffering Image"></div> 
+                        <div class="col-md-6 ">
+                        <div class="d-flex h-100">
+                            <div class="row justify-content-center align-self-center">
+                            <p class="p-2">Hurrah !!!! You have <span class="text-success font-weight-bold">very less chances of getting heart disease</span>.Want to know more about the cardiovascular diseases. Please  <a href="{{ url_for('about') }}" class="btn btn-primary"> click here</a></p>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                {% elif prediction==0 %}
+                <div class="row">
+                    <div class="col-md-6 border-right"><img class="gif1" src="https://media.tenor.com/images/941b7c7ddbe833e186af7704e26aa3df/tenor.gif" alt="suffering Image" height="300px" width="300px"></div>
+                    <div class="col-md-6 ">
+                        <div class="d-flex h-100">
+                        <div class="row justify-content-center align-self-center">
+                        <p class="p-2 ">Unfortunetly, you have <span class="text-danger font-weight-bold"> high risk of getting heart disease</span>, Please contact your doctor immediately.<br /> To get more information about cardio-vascular diseases . <a href="{{ url_for('about') }}" class="btn btn-primary">click here</a>
+                        </p>
+                    </div>
+                    </div>
+                    </div>
+                </div>    
+                {% endif %}
+            </div>
+            </div>
+            </div>
+            <div class="col-12 h2 font-weight-bold text-info mb-0 pb-1">Your Data Statistics</div>
+            <div class="col-md-6 col-sm-12">
+                <img src="{{url_for('static', filename='plotng.png')}}" alt="not found" class="img-thumbnail">
+            </div>
+            <div class="col-md-6 col-sm-12">
+                <img src="{{url_for('static', filename='plotng2.png')}}" alt="not found" class="img-thumbnail">
+            </div>
+            <div class="col-12">
+                <p class="m-1 p-1 text-primary font-weight-bold">Caution: This is just a prediction and not doctoral advice. Kindly see a doctor if you feel the symptoms persist.</p>      
+            </div>
+        </div>
+        <footer class="mt-4 p-3 border-info">Made while having ☕️. By Sankalp Tyagi
+            <a href="www.linkedin.com/in/sankalp-tyagi-596039249" class="text-primary h2">  <i class="fa fa-linkedin-square" aria-hidden="true">  </i></a> 
+            <a href="https://github.com/Sankalp0-1" class="text-dark h2">  <i class="fa fa-github" aria-hidden="true">  </i></a>
+        </footer>
+    </div>
+    
+</body>
+</html>
+
+
+
+
+    
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Cardio Monitor — Result</title>
+    <style>
+        :root{--teal:#0d6e6e;--teal-light:#14a5a5;--teal-dark:#084f4f;--cream:#f8f4ef;--cream-dark:#ede8e1;--red:#c0392b;--green:#16a34a;--text-dark:#1a1a1a;--text-mid:#4a4a4a;--text-light:#8a8a8a}
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text-dark);overflow-x:hidden}
+        nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:16px 48px;background:rgba(8,79,79,0.97);backdrop-filter:blur(12px);box-shadow:0 2px 20px rgba(0,0,0,0.2)}
+        .nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+        .nav-brand .hicon{font-size:1.5rem;animation:hb 1.8s ease infinite}
+        @keyframes hb{0%,100%{transform:scale(1)}14%{transform:scale(1.2)}28%{transform:scale(1)}42%{transform:scale(1.1)}}
+        .nav-brand span{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:600;color:#fff}
+        .nav-links{display:flex;gap:24px;align-items:center}
+        .nav-links a{color:rgba(255,255,255,0.8);text-decoration:none;font-size:0.85rem;letter-spacing:0.06em;text-transform:uppercase;transition:color 0.2s;display:inline-flex;align-items:center;gap:7px}
+        .nav-links a:hover{color:#fff}
+        .nav-back{background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);padding:7px 18px;border-radius:40px}
+        .nav-counter{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);color:#fff;padding:4px 14px;border-radius:20px;font-size:0.8rem;display:flex;align-items:center;gap:6px}
+        .cdot{width:6px;height:6px;border-radius:50%;background:#4ade80;animation:pulse 2s ease infinite}
+        @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(0.7)}}
+
+        /* RESULT HERO */
+        .result-hero{min-height:100vh;padding-top:80px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden}
+        .result-hero.safe{background:linear-gradient(135deg,#e8f5f5 0%,#f0fdf4 50%,#ecfdf5 100%)}
+        .result-hero.danger{background:linear-gradient(135deg,#fef2f2 0%,#fff8f8 50%,#fef2f2 100%)}
+        .result-hero::before{content:'';position:absolute;top:-120px;right:-120px;width:600px;height:600px;border-radius:50%;opacity:0.5}
+        .result-hero.safe::before{background:radial-gradient(circle,rgba(22,163,74,0.08) 0%,transparent 70%)}
+        .result-hero.danger::before{background:radial-gradient(circle,rgba(192,57,43,0.08) 0%,transparent 70%)}
+
+        .result-content{position:relative;z-index:2;text-align:center;padding:60px 40px 40px;max-width:900px;width:100%}
+        .greeting-tag{display:inline-flex;align-items:center;gap:8px;font-size:0.72rem;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;padding:6px 16px;border-radius:40px;margin-bottom:20px}
+        .greeting-tag.safe{background:rgba(22,163,74,0.1);border:1px solid rgba(22,163,74,0.25);color:var(--green)}
+        .greeting-tag.danger{background:rgba(192,57,43,0.1);border:1px solid rgba(192,57,43,0.25);color:var(--red)}
+        .greeting-name{font-family:'Cormorant Garamond',serif;font-size:3.2rem;font-weight:300;margin-bottom:8px;color:var(--text-dark)}
+        .greeting-name em{font-style:italic}
+        .result-badge{display:inline-flex;align-items:center;gap:12px;padding:20px 36px;border-radius:20px;margin:28px 0;font-size:1.05rem;font-weight:500}
+        .result-badge.safe{background:#dcfce7;color:#15803d;border:1px solid #bbf7d0}
+        .result-badge.danger{background:#fee2e2;color:#b91c1c;border:1px solid #fecaca}
+        .result-badge .badge-icon{font-size:2rem}
+        .result-desc{color:var(--text-mid);font-size:0.97rem;line-height:1.7;max-width:560px;margin:0 auto 32px}
+        .result-actions{display:flex;gap:16px;justify-content:center;align-items:center;flex-wrap:wrap}
+        .btn-home{background:var(--teal);color:#fff;padding:13px 30px;border-radius:50px;text-decoration:none;font-size:0.9rem;font-weight:500;transition:all 0.3s;box-shadow:0 4px 20px rgba(13,110,110,0.3);display:inline-flex;align-items:center;gap:9px}
+        .btn-home:hover{background:var(--teal-dark);transform:translateY(-2px)}
+        .btn-learn{color:var(--teal);text-decoration:none;font-size:0.9rem;font-weight:500;display:inline-flex;align-items:center;gap:8px;padding:13px 24px;border:1.5px solid rgba(13,110,110,0.3);border-radius:50px;transition:all 0.2s}
+        .btn-learn:hover{background:rgba(13,110,110,0.06)}
+
+        /* STATS SECTION */
+        .stats-section{padding:60px 72px;background:#fff}
+        .stats-header{text-align:center;margin-bottom:40px}
+        .section-tag{display:inline-block;font-size:0.7rem;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:var(--teal);margin-bottom:10px}
+        .section-title{font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:300}
+        .section-title em{color:var(--teal);font-style:italic}
+        .charts-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;max-width:960px;margin:0 auto}
+        .chart-card{background:var(--cream);border-radius:18px;padding:24px;border:1px solid var(--cream-dark);overflow:hidden}
+        .chart-card img{width:100%;border-radius:10px;display:block}
+        .caution-banner{max-width:960px;margin:28px auto 0;background:rgba(13,110,110,0.06);border:1px solid rgba(13,110,110,0.15);border-radius:14px;padding:18px 28px;display:flex;align-items:center;gap:14px;color:var(--teal);font-size:0.9rem;line-height:1.6}
+        .caution-banner i{font-size:1.4rem;flex-shrink:0}
+
+        footer{background:var(--teal-dark);padding:44px 72px;display:flex;align-items:center;justify-content:space-between}
+        .footer-brand{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:600;color:#fff;display:flex;align-items:center;gap:9px;margin-bottom:6px}
+        .footer-tagline{font-size:0.8rem;color:rgba(255,255,255,0.45)}
+        .footer-center{font-size:0.85rem;color:rgba(255,255,255,0.6);text-align:center}
+        .footer-center strong{color:rgba(255,255,255,0.9)}
+        .footer-right{display:flex;gap:12px}
+        .social-btn{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.75);text-decoration:none;font-size:0.95rem;transition:all 0.25s}
+        .social-btn:hover{background:rgba(255,255,255,0.2);color:#fff;transform:translateY(-3px)}
+
+        .reveal{opacity:0;transform:translateY(24px);transition:opacity 0.6s ease,transform 0.6s ease}
+        .reveal.visible{opacity:1;transform:translateY(0)}
+        @media(max-width:768px){nav{padding:14px 20px}.nav-counter{display:none}.stats-section{padding:40px 20px}.charts-grid{grid-template-columns:1fr}.result-content{padding:40px 20px}.greeting-name{font-size:2.4rem}footer{flex-direction:column;gap:20px;text-align:center;padding:36px 24px}}
+    </style>
+</head>
+<body>
+
+<nav>
+    <a class="nav-brand" href="{{ url_for('home') }}">
+        <span class="hicon">🫀</span>
+        <span>Cardio Monitor</span>
+    </a>
+    <div class="nav-links">
+        <a href="{{ url_for('home') }}" class="nav-back"><i class="fa fa-arrow-left"></i> Check Again</a>
+        <a href="{{ url_for('about')
+ }}">About Disease</a>
+        <div class="nav-counter"><span class="cdot"></span><span>{{ model_counter }} predictions</span></div>
+    </div>
+</nav>
+
+{% if prediction==1 %}
+<section class="result-hero safe">
+    <div class="result-content">
+        <div class="greeting-tag safe"><i class="fa fa-check-circle"></i> Assessment Complete</div>
+        <h1 class="greeting-name">Hello, <em>{{ nameofpatient }}</em></h1>
+        <div class="result-badge safe">
+            <span class="badge-icon">🥳</span>
+            <div>
+                <div style="font-size:1.2rem;font-weight:600">You're in the clear!</div>
+                <div style="font-size:0.88rem;opacity:0.8">Very low chances of heart disease</div>
+            </div>
+        </div>
+        <p class="result-desc">Great news! Based on your clinical data, our AI model predicts that you have very low chances of developing heart disease. Keep maintaining your healthy lifestyle!</p>
+        <div class="result-actions">
+            <a href="{{ url_for('home') }}" class="btn-home"><i class="fa fa-home"></i> Back to Home</a>
+            <a href="{{ url_for('about')
+ }}" class="btn-learn">Learn about heart health <i class="fa fa-arrow-right"></i></a>
+        </div>
+    </div>
+</section>
+{% elif prediction==0 %}
+<section class="result-hero danger">
+    <div class="result-content">
+        <div class="greeting-tag danger"><i class="fa fa-exclamation-circle"></i> Assessment Complete</div>
+        <h1 class="greeting-name">Hello, <em>{{ nameofpatient }}</em></h1>
+        <div class="result-badge danger">
+            <span class="badge-icon">🫀</span>
+            <div>
+                <div style="font-size:1.2rem;font-weight:600">Please consult a doctor</div>
+                <div style="font-size:0.88rem;opacity:0.8">High risk of heart disease detected</div>
+            </div>
+        </div>
+        <p class="result-desc">Based on your clinical data, our model has detected signs of high cardiovascular risk. Please contact your doctor immediately. Early detection can save lives.</p>
+        <div class="result-actions">
+            <a href="{{ url_for('home') }}" class="btn-home"><i class="fa fa-home"></i> Back to Home</a>
+            <a href="{{ url_for('about')}}" class="btn-learn">Learn about heart disease <i class="fa fa-arrow-right"></i></a>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<section class="stats-section reveal">
+    <div class="stats-header">
+        <div class="section-tag">Your Analysis</div>
+        <h2 class="section-title">Data <em>Statistics</em></h2>
+    </div>
+    <div class="charts-grid">
+        <div class="chart-card">
+            <img src="{{ url_for('static', filename='plotng.png') }}" alt="Health Statistics Chart 1">
+        </div>
+        <div class="chart-card">
+            <img src="{{ url_for('static', filename='plotng2.png') }}" alt="Health Statistics Chart 2">
+        </div>
+    </div>
+    <div class="caution-banner">
+        <i class="fa fa-shield-halved"></i>
+        <span><strong>Important:</strong> This is an AI-generated prediction and not a substitute for professional medical advice. Please consult a qualified doctor if you have any concerns about your heart health.</span>
+    </div>
+</section>
+
+<footer>
+    <div><div class="footer-brand">🫀 Cardio Monitor</div><div class="footer-tagline">AI-powered heart disease prediction</div></div>
+    <div class="footer-center">Made with ❤️ &nbsp;·&nbsp; By <strong>Team Cardio</strong></div>
+    <div class="footer-right">
+        <a href="https://www.linkedin.com/in/sankalp-tyagi-596039249" class="social-btn" target="_blank"><i class="fa-brands fa-linkedin-in"></i></a>
+        <a href="https://github.com/Sankalp0-1" class="social-btn" target="_blank"><i class="fa-brands fa-github"></i></a>
+    </div>
+</footer>
+
+<script>
+    const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')}),{threshold:0.1});
+    document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));
+</script>
+</body>
+</html>
