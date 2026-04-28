@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <h1> <img src="https://raw.githubusercontent.com/shsarv/Cardio-Monitor/main/static/heartlogo.png" width="50px" /> Cardio Monitor</h1>
 
 ![Status](https://img.shields.io/badge/Status-Active-brightgreen) ![Accuracy](https://img.shields.io/badge/Model%20Accuracy-92%25-teal) ![Python](https://img.shields.io/badge/Python-3.8+-blue) ![Flask](https://img.shields.io/badge/Flask-1.1.2-lightgrey)
@@ -164,3 +165,6 @@ MIT License — Free to use with attribution.
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Sankalp%20Tyagi-blue?logo=linkedin)](https://www.linkedin.com/in/sankalp-tyagi-596039249)
 [![GitHub](https://img.shields.io/badge/GitHub-Sankalp0--1-black?logo=github)](https://github.com/Sankalp0-1)
+=======
+# Final_year_project
+>>>>>>> 2690363fef95a0867d80f2ea7a22610f774d9697
