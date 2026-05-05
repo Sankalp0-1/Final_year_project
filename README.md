@@ -156,7 +156,7 @@ MIT License — Free to use with attribution.
 
 **🏫 Ajay Kumar Garg Engineering College**
 **📚 Department:** Computer Science & Engineering (Data Science)
-**📖 Subject:** Big Data Analytics — BCS851
+**Project ID:** CSE(DS)-2-2026-028
 
 ---
 
@@ -164,3 +164,11 @@ MIT License — Free to use with attribution.
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Sankalp%20Tyagi-blue?logo=linkedin)](https://www.linkedin.com/in/sankalp-tyagi-596039249)
 [![GitHub](https://img.shields.io/badge/GitHub-Sankalp0--1-black?logo=github)](https://github.com/Sankalp0-1)
+
+---
+
+## 🚀 Live Demo
+
+👉 [Click here to view deployed project](https://final-year-project-q0hv.onrender.com)
+
+
